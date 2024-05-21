@@ -1,13 +1,38 @@
+import './styles/index.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/index.css';
-import App from './components/App';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './tests/reportWebVitals';
+
+import App      from './components/App';
+import Comments from './components/Comments';
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+
+  {
+    path: "/test",
+    element: <div>Hello world!</div>,
+  },
+
+  {
+    path: "comments/:commentId",
+    element: <Comments />
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <App />
+  <React.StrictMode>
+    <RouterProvider router={router}>
+    </RouterProvider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,15 +1,18 @@
 import '../styles/Post.css';
+import { Link } from 'react-router-dom';
 
-function Post({post, deletePost}) {
-
+function Post({post}) {
   return (
-    <div className='post'>
-      <div>{post.postId}</div>
-      <div>{post.name}</div>
-      <div>{post.email}</div>
-      <div>{post.body}</div>
-      <button onClick={(event) => deletePost(post.id, event)}>Delete</button>
-    </div>
+    <>
+      <div className='post'>
+        <div>Автор: {post.userId}</div>
+        <div className='title'>Заголовок: {post.title}</div>
+        <div className='body'>Пост: {post.body}</div>
+        <Link to={`/comments/${post.id}`}>
+          <button type='button'>Комментарии</button>
+        </Link>
+      </div>
+    </>
   );
 }
 

@@ -1,19 +1,15 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+
 import Post from './Post'
 import Input from './Input';
 
 function Posts() {
-  console.log('Posts');
-
   const [posts,  setPosts] = useState([])
   const [search, setSearch] = useState('')
 
   useEffect(() => {
     getPosts()
-    return () => {
-      console.log('Posts onUnmount');
-    };
   }, []);
 
   const getPosts = () => {
@@ -22,30 +18,34 @@ function Posts() {
       .then((response) => setPosts(response.data))
   }
 
-  const deletePost = (id, event) => {
-    setPosts(posts.filter((post) => post.id !== id));
-  }
-
-  const filteredPost = () => {
+  const getFilteredPost = () => {
     if (!search) { return posts; }
-    return posts.filter((post) => post.name.toLowerCase().search(search) !== -1)
+
+    return posts.filter((post) => {
+      return post.body.split(' ').some((word) => {
+        return word.toLowerCase().startsWith(search)
+      });
+    });
   }
 
   const handleSearch = (event) => {
     setSearch(event.target.value.toLowerCase());
   }
 
+  const filteredPost = getFilteredPost()
+
   return (
-    <div>
+    <>
+      <h2>Посты</h2>
       <Input handleSearch={handleSearch}/>
       {
-        filteredPost().map((post) => {
+        filteredPost.map((post) => {
           return (
-            <Post key={post.id} post={post} deletePost={deletePost}/>
+            <Post key={post.id} post={post} />
           )
         })
       }
-    </div>
+    </>
   )
 }
 

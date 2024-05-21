@@ -1,0 +1,8 @@
+header {
+  margin: 10px;
+  background-color: #3bF;
+
+  div {
+    display: inline-block;
+  }
+}
