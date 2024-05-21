@@ -5,10 +5,12 @@ function Header() {
   return (
     <>
       <header>
-        <div>Домой</div>
-        <div>Мои посты</div>
-        <div>Мои комментарии</div>
-        <div>Войти</div>
+        <Link to={`/`}>
+          <a type='button'>Домой</a>
+        </Link>
+        {/* <div>Мои посты</div> */}
+        {/* <div>Мои комментарии</div> */}
+        {/* <div>Войти</div> */}
       </header>
     </>
   );

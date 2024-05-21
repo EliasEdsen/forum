@@ -5,7 +5,9 @@ function Post({post}) {
   return (
     <>
       <div className='post'>
-        <div>Автор: {post.userId}</div>
+        <Link to={`/users/${post.userId}`}>
+          <a>Автор: {post.userId}</a>
+        </Link>
         <div className='title'>Заголовок: {post.title}</div>
         <div className='body'>Пост: {post.body}</div>
         <Link to={`/comments/${post.id}`}>

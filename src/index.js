@@ -7,6 +7,7 @@ import reportWebVitals from './tests/reportWebVitals';
 
 import App      from './components/App';
 import Comments from './components/Comments';
+import User     from './components/User';
 
 
 const router = createBrowserRouter([
@@ -16,13 +17,13 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/test",
-    element: <div>Hello world!</div>,
+    path: "comments/:commentId",
+    element: <Comments />
   },
 
   {
-    path: "comments/:commentId",
-    element: <Comments />
+    path: "users/:userId",
+    element: <User />
   },
 ]);
 

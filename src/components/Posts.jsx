@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
-import Post from './Post'
+import Header from './Header';
 import Input from './Input';
+import Post from './Post'
 
 function Posts() {
   const [posts,  setPosts] = useState([])
@@ -36,6 +36,7 @@ function Posts() {
 
   return (
     <>
+      <Header />
       <h2>Посты</h2>
       <Input handleSearch={handleSearch}/>
       {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
+import Header from './Header';
 import Comment from './Comment';
 
 function Comments() {
@@ -14,12 +14,13 @@ function Comments() {
 
   const getComments = () => {
     axios
-      .get(`https://jsonplaceholder.typicode.com/comments?postId=${params.commentId}`)
+      .get(`https://jsonplaceholder.typicode.com/posts/${params.commentId}/comments`)
       .then((response) => setComments(response.data))
   }
 
   return (
     <>
+      <Header />
       <h2>Комментарии</h2>
       {
         comments.map((comment) => {
