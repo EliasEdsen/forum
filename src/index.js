@@ -7,6 +7,7 @@ import reportWebVitals from './tests/reportWebVitals';
 
 import App      from './components/App';
 import Comments from './components/Comments';
+import Users    from './components/Users';
 import User     from './components/User';
 
 
@@ -24,6 +25,18 @@ const router = createBrowserRouter([
   {
     path: "users/:userId",
     element: <User />
+  },
+
+  {
+    path: "users",
+    element: <Users />,
+
+    children: [
+      {
+        path: "users",
+        element: <User />,
+      },
+    ],
   },
 ]);
 
