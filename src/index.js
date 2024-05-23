@@ -5,11 +5,14 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './tests/reportWebVitals';
 
-import App      from './components/App';
-import Comments from './components/Comments';
-import Users    from './components/Users';
-import User     from './components/User';
+import App from './components/App';
 
+Object.defineProperty(String.prototype, 'capitalize', {
+  value: function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  },
+  enumerable: false
+});
 
 const router = createBrowserRouter([
   {
@@ -17,27 +20,27 @@ const router = createBrowserRouter([
     element: <App />,
   },
 
-  {
-    path: "comments/:commentId",
-    element: <Comments />
-  },
+  // {
+  //   path: "comments/:commentId",
+  //   element: <Comments />
+  // },
 
-  {
-    path: "users/:userId",
-    element: <User />
-  },
+  // {
+  //   path: "users/:userId",
+  //   element: <User />
+  // },
 
-  {
-    path: "users",
-    element: <Users />,
+  // {
+  //   path: "users",
+  //   element: <Users />,
 
-    children: [
-      {
-        path: "users",
-        element: <User />,
-      },
-    ],
-  },
+  //   children: [
+  //     {
+  //       path: "users",
+  //       element: <User />,
+  //     },
+  //   ],
+  // },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
