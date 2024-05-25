@@ -1,0 +1,12 @@
+.point-date {
+  padding: 0 1rem;
+  margin: 0 auto;
+  display: table;
+  background-color: #99F;
+  border-radius: 10rem;
+  font-size: 1.5rem;
+  color: #9FF;
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+}
