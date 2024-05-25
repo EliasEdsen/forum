@@ -53,21 +53,32 @@ function Points() {
   }
 
   const getTimelineByPoints = (points) => {
+    if (!points.length) { return []; }
     const timeline = [];
 
-    let usedDate;
+    let usedDate, dateNext;
+
     for (let indexOfPoint = 0; indexOfPoint < points.length; indexOfPoint++) {
       const point = points[indexOfPoint];
       const date = dayjs(point.date).format('DD MMMM YYYY');
 
-      if (usedDate != date) {
+      if (!usedDate) {
         timeline.push({type: 'date', text: date, id: point.date});
         timeline.push({type: 'point', point: point, id: point.id});
 
         usedDate = date;
+      } else if (usedDate !== date) {
+        timeline.push({type: 'date', text: dateNext.format('DD MMMM YYYY'), id: dateNext.format('x')});
+        timeline.push({type: 'date', text: date, id: point.date});
+        timeline.push({type: 'point', point: point, id: point.id});
+      } else {
+        timeline.push({type: 'point', point: point, id: point.id});
       }
+
+      dateNext = dayjs(point.date).add(1, 'd');
     }
 
+    timeline.push({type: 'date', text: dateNext.format('DD MMMM YYYY'), id: dateNext.format('x')});
     timeline.push({type: 'date', text: 'NOW', id: Date.now()});
 
     return timeline;

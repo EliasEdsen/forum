@@ -6,6 +6,7 @@ import dayjs from 'dayjs'
 function Point({point}) {
   return (
     <>
+      <div className="line-short"></div>
       <div className="point">
         <div className="time">{dayjs(point.date).format('HH:mm:ss')}</div>
         {/* <div className="edit" @click="editClick()">{{ this.$translate('Points.Edit') }}</div> */}
@@ -15,6 +16,7 @@ function Point({point}) {
           {/* <span className="tag" v-for="(tagData, index) in tags" :key="index" @click="tagClick(tagData)">{{ tagData.tag }}</span> */}
         {/* </div> */}
       </div>
+      <div className="line-short"></div>
 
       {/* <Link to={`/users/${point.userId}`}> */}
         {/* <a>Автор: {point.userId}</a> */}
