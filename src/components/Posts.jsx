@@ -30,7 +30,7 @@ function Posts() {
 
     if (!global.postId) { global.postId = 0; }
     global.postId += 1
-    return {id: global.postId, date: __randomDate(), body: __textLorem(20)};
+    return {id: global.postId, date: __randomDate()};
   }
 
   const getFilteredPost = () => {

@@ -6,7 +6,7 @@ function Header() {
     <>
       <header>
         <Link to={`/`}>
-          <a type='button'>Домой</a>
+          <div type='button'>Домой</div>
         </Link>
         {/* <div>Мои посты</div> */}
         {/* <div>Мои комментарии</div> */}

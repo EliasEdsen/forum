@@ -4,6 +4,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './tests/reportWebVitals';
+import store from './redux'
+import { Provider } from 'react-redux';
+
 
 import App from './components/App';
 
@@ -11,6 +14,7 @@ Object.defineProperty(String.prototype, 'capitalize', {
   value: function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
   },
+
   enumerable: false
 });
 
@@ -47,8 +51,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}>
-    </RouterProvider>
+    <Provider store={store}>
+      <RouterProvider router={router}>
+      </RouterProvider>
+    </Provider>
   </React.StrictMode>
 );
 
