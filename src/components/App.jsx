@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 // import { decrement, increment, incrementByAmount} from '../redux/reducers/userSlice'
 
-import Posts from './Posts'
+import Points from './Points'
 
 function App() {
   // const coins = useSelector((state) => state.user.coins)
@@ -31,7 +31,7 @@ function App() {
         </button>
       </div> */}
 
-      <Posts />
+      <Points />
     </>
   );
 }

@@ -1,29 +1,29 @@
 // import axios from 'axios';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs'
 
 import Header from './Header';
 import Input from './Input';
-import Post from './Post'
-import Date from './Date'
+import Point from './Point'
+import PointDate from './PointDate'
 
-function Posts() {
-  const [posts,  setPosts] = useState([]);
+function Points() {
+  const [points,  setPoints] = useState([]);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    getPosts();
+    getPoints();
   }, []);
 
-  const getPosts = () => {
+  const getPoints = () => {
     // axios
-      // .get('https://jsonplaceholder.typicode.com/posts')
-      // .then((response) => setPosts(response.data))
+      // .get('https://jsonplaceholder.typicode.com/points')
+      // .then((response) => setPoints(response.data))
 
-    setPosts([createPost(), createPost(), createPost()]);
+    setPoints([createPoint(), createPoint(), createPoint()]);
   }
 
-  const createPost = () => {
+  const createPoint = () => {
     const __textLorem = (count) =>
       (["lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipisicing", "elit", "laudantium", "voluptatem", "vitae", "quam", "possimus", "odit", "quaerat", "beatae", "eum", "incidunt", "explicabo", "temporibus", "deleniti", "id", "ad", "ipsam", "omnis", "animi", "expedita", "corporis", "eaque", "eveniet", "sed", "corrupti", "accusantium", "delectus", "quasi", "labore", "aperiam", "hic", "ab", "qui", "iste", "reprehenderit", "tempore", "nisi", "fuga", "suscipit", "optio", "voluptate", "modi", "recusandae", "consequatur", "ratione", "quis", "deserunt", "porro", "enim", "itaque", "dignissimos", "sequi", "esse", "alias", "veniam", "magnam", "aliquid", "dolore", "adipisci", "facilis", "officiis", "illo", "neque", "ut", "cupiditate", "laboriosam", "illum", "numquam", "molestias", "nemo", "dolores", "architecto", "similique", "quos", "mollitia", "doloremque", "ipsa", "dolorem", "repudiandae", "pariatur", "in", "aliquam", "perferendis", "soluta", "quo", "at", "voluptatum", "inventore", "culpa", "placeat", "doloribus", "nulla", "odio", "vero", "sint", "iusto", "totam", "exercitationem", "autem", "ex", "harum", "saepe", "natus", "praesentium", "facere", "rerum", "obcaecati", "libero", "aspernatur", "impedit", "non", "sunt", "voluptates", "maxime", "nihil", "assumenda", "a", "vel", "quae", "magni", "veritatis", "quod", "perspiciatis", "dicta", "fugit", "quisquam", "et", "eius", "eligendi", "asperiores", "debitis", "iure", "voluptas", "blanditiis", "nam", "minus", "consequuntur", "earum", "distinctio", "cum", "maiores", "nostrum", "ea", "commodi", "quidem", "ducimus", "molestiae", "ullam", "error", "sapiente", "quibusdam", "officia", "necessitatibus", "eos", "velit", "unde", "nesciunt", "quas", "dolorum", "repellendus", "tenetur", "excepturi", "rem", "reiciendis", "provident", "tempora", "nobis", "laborum", "minima", "accusamus", "repellat", "cumque", "est", "atque", "voluptatibus", "quia", "fugiat"].sort(() => Math.random() - 0.5).slice(0, count).join(' ') + '.').capitalize();
 
@@ -31,38 +31,38 @@ function Posts() {
       return Math.floor(Math.random() * Date.now());
     }
 
-    if (!global.postId) { global.postId = 0; }
-    global.postId += 1;
-    return {id: global.postId, date: __randomDate(), body: __textLorem(20)};
+    if (!global.pointId) { global.pointId = 0; }
+    global.pointId += 1;
+    return {id: global.pointId, date: __randomDate(), body: __textLorem(20)};
   }
 
-  const getFilteredPostsByPosts = (posts) => {
-    if (!search) { return posts; }
+  const getFilteredPointsByPoints = (points) => {
+    if (!search) { return points; }
 
-    return posts.filter((post) => {
-      return post.body.split(' ').some((word) => {
+    return points.filter((point) => {
+      return point.body.split(' ').some((word) => {
         return word.toLowerCase().startsWith(search)
       });
     });
   }
 
-  const getSortedPostsByPosts = (posts) => {
-    return posts.sort((postA, postB) => {
-      return postA.date - postB.date;
+  const getSortedPointsByPoints = (points) => {
+    return points.sort((pointA, pointB) => {
+      return pointA.date - pointB.date;
     });
   }
 
-  const getTimelineByPosts = (posts) => {
+  const getTimelineByPoints = (points) => {
     const timeline = [];
 
     let usedDate;
-    for (let indexOfPost = 0; indexOfPost < posts.length; indexOfPost++) {
-      const post = posts[indexOfPost];
-      const date = dayjs(post.date).format('DD MMMM YYYY');
+    for (let indexOfPoint = 0; indexOfPoint < points.length; indexOfPoint++) {
+      const point = points[indexOfPoint];
+      const date = dayjs(point.date).format('DD MMMM YYYY');
 
       if (usedDate != date) {
-        timeline.push({type: 'date', text: date, id: post.date});
-        timeline.push({type: 'post', post: post, id: post.id});
+        timeline.push({type: 'date', text: date, id: point.date});
+        timeline.push({type: 'point', point: point, id: point.id});
 
         usedDate = date;
       }
@@ -74,13 +74,13 @@ function Posts() {
   }
 
   const getTimeline = () => {
-    let _posts, timeline;
+    let _points, timeline;
 
-    _posts = structuredClone(posts);
-    _posts = getFilteredPostsByPosts(_posts);
-    _posts = getSortedPostsByPosts(_posts);
+    _points = structuredClone(points);
+    _points = getFilteredPointsByPoints(_points);
+    _points = getSortedPointsByPoints(_points);
 
-    timeline = getTimelineByPosts(_posts);
+    timeline = getTimelineByPoints(_points);
     timeline = timeline.reverse();
 
     return timeline;
@@ -100,7 +100,7 @@ function Posts() {
       {
         timeline.map((point) => {
           return (
-            point.type === 'date' ? <Date key={point.id} text={point.text} /> : <Post key={point.id} post={point.post} />
+            point.type === 'date' ? <PointDate key={point.id} text={point.text} /> : <Point key={point.id} point={point.point} />
           )
         })
       }
@@ -108,4 +108,4 @@ function Posts() {
   )
 }
 
-export default Posts;
+export default Points;
