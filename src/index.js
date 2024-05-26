@@ -9,9 +9,9 @@ import { Provider } from 'react-redux';
 
 import App from './components/App';
 
-const dayjs = require('dayjs')
-require('dayjs/locale/ru')
-dayjs.locale('ru')
+// const dayjs = require('dayjs')
+// require('dayjs/locale/ru')
+// dayjs.locale('ru')
 
 Object.defineProperty(String.prototype, 'capitalize', {
   value: function() {

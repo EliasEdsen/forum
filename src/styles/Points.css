@@ -1,0 +1,19 @@
+.points {
+  .line-short {
+    width: 0.2rem;
+    height: 1rem;
+    margin: 0 auto;
+    background-color: #99F;
+  }
+
+  .line-long {
+    width: 0.2rem;
+    height: 3rem;
+    margin: 0 auto;
+    background-color: #99F;
+  }
+
+  .line-long + .line-long, .line-long + .line-short, .point + .line-short, .line-long:first-child, .line-long:last-child {
+    height: 0;
+  }
+}

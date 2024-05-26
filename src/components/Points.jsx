@@ -1,3 +1,5 @@
+import '../styles/Points.css';
+
 // import axios from 'axios';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs'
@@ -20,20 +22,24 @@ function Points() {
       // .get('https://jsonplaceholder.typicode.com/points')
       // .then((response) => setPoints(response.data))
 
-    setPoints([createPoint(), createPoint(), createPoint()]);
+    const _points = [];
+    for (let i = 0; i < 500; i++) {
+      _points.push(createPoint(i));
+    }
+
+    setPoints(_points);
   }
 
-  const createPoint = () => {
+  const createPoint = (index) => {
     const __textLorem = (count) =>
       (["lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipisicing", "elit", "laudantium", "voluptatem", "vitae", "quam", "possimus", "odit", "quaerat", "beatae", "eum", "incidunt", "explicabo", "temporibus", "deleniti", "id", "ad", "ipsam", "omnis", "animi", "expedita", "corporis", "eaque", "eveniet", "sed", "corrupti", "accusantium", "delectus", "quasi", "labore", "aperiam", "hic", "ab", "qui", "iste", "reprehenderit", "tempore", "nisi", "fuga", "suscipit", "optio", "voluptate", "modi", "recusandae", "consequatur", "ratione", "quis", "deserunt", "porro", "enim", "itaque", "dignissimos", "sequi", "esse", "alias", "veniam", "magnam", "aliquid", "dolore", "adipisci", "facilis", "officiis", "illo", "neque", "ut", "cupiditate", "laboriosam", "illum", "numquam", "molestias", "nemo", "dolores", "architecto", "similique", "quos", "mollitia", "doloremque", "ipsa", "dolorem", "repudiandae", "pariatur", "in", "aliquam", "perferendis", "soluta", "quo", "at", "voluptatum", "inventore", "culpa", "placeat", "doloribus", "nulla", "odio", "vero", "sint", "iusto", "totam", "exercitationem", "autem", "ex", "harum", "saepe", "natus", "praesentium", "facere", "rerum", "obcaecati", "libero", "aspernatur", "impedit", "non", "sunt", "voluptates", "maxime", "nihil", "assumenda", "a", "vel", "quae", "magni", "veritatis", "quod", "perspiciatis", "dicta", "fugit", "quisquam", "et", "eius", "eligendi", "asperiores", "debitis", "iure", "voluptas", "blanditiis", "nam", "minus", "consequuntur", "earum", "distinctio", "cum", "maiores", "nostrum", "ea", "commodi", "quidem", "ducimus", "molestiae", "ullam", "error", "sapiente", "quibusdam", "officia", "necessitatibus", "eos", "velit", "unde", "nesciunt", "quas", "dolorum", "repellendus", "tenetur", "excepturi", "rem", "reiciendis", "provident", "tempora", "nobis", "laborum", "minima", "accusamus", "repellat", "cumque", "est", "atque", "voluptatibus", "quia", "fugiat"].sort(() => Math.random() - 0.5).slice(0, count).join(' ') + '.').capitalize();
 
     const __randomDate = () => {
       return Math.floor(Math.random() * Date.now());
+      // return Number(dayjs().subtract(index, 'h').valueOf())
     }
 
-    if (!global.pointId) { global.pointId = 0; }
-    global.pointId += 1;
-    return {id: global.pointId, date: __randomDate(), body: __textLorem(20)};
+    return {id: index, date: __randomDate(), body: __textLorem(20)};
   }
 
   const getFilteredPointsByPoints = (points) => {
@@ -56,21 +62,32 @@ function Points() {
     if (!points.length) { return []; }
     const timeline = [];
 
-    let usedDate, dateNext;
+    let usedDay, dateNext;
+
+    const getFormat = (object, format = 'DD MMMM YYYY') => {
+      if (!object.$isDayjsObject) { object = dayjs(object); }
+      return object.format(format);
+    }
 
     for (let indexOfPoint = 0; indexOfPoint < points.length; indexOfPoint++) {
       const point = points[indexOfPoint];
-      const date = dayjs(point.date).format('DD MMMM YYYY');
 
-      if (!usedDate) {
-        timeline.push({type: 'date', text: date, id: point.date});
+      if (!usedDay) {
+        timeline.push({type: 'date', text: getFormat(point.date), id: point.date});
         timeline.push({type: 'point', point: point, id: point.id});
 
-        usedDate = date;
-      } else if (usedDate !== date) {
-        timeline.push({type: 'date', text: dateNext.format('DD MMMM YYYY'), id: dateNext.format('x')});
-        timeline.push({type: 'date', text: date, id: point.date});
+        usedDay = point.date;
+      } else if (getFormat(usedDay) != getFormat(point.date)) {
+        if (getFormat(point.date) === getFormat(dateNext)) {
+          timeline.push({type: 'date', text: getFormat(point.date), id: point.date});
+        } else {
+          timeline.push({type: 'date', text: getFormat(dateNext), id: dateNext.valueOf()});
+          timeline.push({type: 'date', text: getFormat(point.date), id: point.date});
+        }
+
         timeline.push({type: 'point', point: point, id: point.id});
+
+        usedDay = point.date;
       } else {
         timeline.push({type: 'point', point: point, id: point.id});
       }
@@ -78,8 +95,8 @@ function Points() {
       dateNext = dayjs(point.date).add(1, 'd');
     }
 
-    timeline.push({type: 'date', text: dateNext.format('DD MMMM YYYY'), id: dateNext.format('x')});
-    timeline.push({type: 'date', text: 'NOW', id: Date.now()});
+    timeline.push({type: 'date', text: getFormat(dateNext), id: dateNext.valueOf()});
+    // timeline.push({type: 'date', text: 'NOW', id: Date.now()});
 
     return timeline;
   }
@@ -108,13 +125,15 @@ function Points() {
       <Header />
       <h2>Посты</h2>
       <Input handleSearch={handleSearch}/>
-      {
-        timeline.map((point) => {
-          return (
-            point.type === 'date' ? <PointDate key={point.id} text={point.text} /> : <Point key={point.id} point={point.point} />
-          )
-        })
-      }
+      <div className='points'>
+        {
+          timeline.map((point) => {
+            return (
+              point.type === 'date' ? <PointDate key={point.id} text={point.text} /> : <Point key={point.id} point={point.point} />
+            )
+          })
+        }
+      </div>
     </>
   )
 }
