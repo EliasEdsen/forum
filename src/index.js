@@ -7,7 +7,8 @@ import reportWebVitals from './tests/reportWebVitals';
 import store from './redux'
 import { Provider } from 'react-redux';
 
-import App from './components/App';
+import App       from './components/App';
+import PointEdit from './components/PointEdit';
 
 // const dayjs = require('dayjs')
 // require('dayjs/locale/ru')
@@ -27,10 +28,15 @@ const router = createBrowserRouter([
     element: <App />,
   },
 
-  // {
-  //   path: "comments/:commentId",
-  //   element: <Comments />
-  // },
+  {
+    path: "points",
+    element: <App />
+  },
+
+  {
+    path: "points/:pointId/edit",
+    element: <PointEdit />
+  },
 
   // {
   //   path: "users/:userId",

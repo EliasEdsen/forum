@@ -120,10 +120,6 @@ function Points() {
     setSearch(event.target.value.toLowerCase());
   }
 
-  const handleEditPont = (event, point) => {
-    console.log('event, point', event, point);
-  }
-
   const timeline = getTimeline();
 
   return (
@@ -135,7 +131,7 @@ function Points() {
         {
           timeline.map((point) => {
             return (
-              point.type === 'date' ? <PointDate key={point.id} text={point.text} /> : <Point key={point.id} point={point.point} handleEditPont={handleEditPont}/>
+              point.type === 'date' ? <PointDate key={point.id} text={point.text} /> : <Point key={point.id} point={point.point} />
             )
           })
         }
