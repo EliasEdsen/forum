@@ -2,6 +2,7 @@ import '../styles/Points.css';
 
 // import axios from 'axios';
 import { useEffect, useState } from 'react';
+import useID from '../hooks/useID';
 import dayjs from 'dayjs'
 
 import Header from './Header';
@@ -11,7 +12,8 @@ import PointDate from './PointDate'
 
 function Points() {
   const [points,  setPoints] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch]  = useState('');
+  const getID                = useID();
 
   useEffect(() => {
     getPoints();
@@ -39,7 +41,7 @@ function Points() {
       // return Number(dayjs().subtract(index, 'h').valueOf())
     }
 
-    return {id: index, date: __randomDate(), body: __textLorem(20)};
+    return {id: getID(), date: __randomDate(), body: __textLorem(20), url: 'https://www.google.com/'};
   }
 
   const getFilteredPointsByPoints = (points) => {
@@ -73,16 +75,16 @@ function Points() {
       const point = points[indexOfPoint];
 
       if (!usedDay) {
-        timeline.push({type: 'date', text: getFormat(point.date), id: point.date});
+        timeline.push({type: 'date', text: getFormat(point.date), id: getID()});
         timeline.push({type: 'point', point: point, id: point.id});
 
         usedDay = point.date;
       } else if (getFormat(usedDay) != getFormat(point.date)) {
         if (getFormat(point.date) === getFormat(dateNext)) {
-          timeline.push({type: 'date', text: getFormat(point.date), id: point.date});
+          timeline.push({type: 'date', text: getFormat(point.date), id: getID()});
         } else {
           timeline.push({type: 'date', text: getFormat(dateNext), id: dateNext.valueOf()});
-          timeline.push({type: 'date', text: getFormat(point.date), id: point.date});
+          timeline.push({type: 'date', text: getFormat(point.date), id: getID()});
         }
 
         timeline.push({type: 'point', point: point, id: point.id});
@@ -118,6 +120,10 @@ function Points() {
     setSearch(event.target.value.toLowerCase());
   }
 
+  const handleEditPont = (event, point) => {
+    console.log('event, point', event, point);
+  }
+
   const timeline = getTimeline();
 
   return (
@@ -129,7 +135,7 @@ function Points() {
         {
           timeline.map((point) => {
             return (
-              point.type === 'date' ? <PointDate key={point.id} text={point.text} /> : <Point key={point.id} point={point.point} />
+              point.type === 'date' ? <PointDate key={point.id} text={point.text} /> : <Point key={point.id} point={point.point} handleEditPont={handleEditPont}/>
             )
           })
         }

@@ -6,7 +6,7 @@
   border-radius: 1rem;
 
   .time {
-    width: 50%;
+    width: calc(50% - 0.5rem);
     padding: 0.5rem 0 0 0.5rem;
     display: inline-block;
     text-align: left;
@@ -14,7 +14,7 @@
   }
 
   .edit {
-    width: 50%;
+    width: calc(50% - 0.5rem);
     padding: 0.5rem 0.5rem 0 0;
     display: inline-block;
     text-align: right;
