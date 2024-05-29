@@ -23,26 +23,6 @@ function Points() {
     axios
       .get('http://localhost:3001/api/points')
       .then((response) => setPoints(response.data))
-      // .then((response) => console.log(response.data))
-
-    // const _points = [];
-    // for (let i = 0; i < 500; i++) {
-    //   _points.push(createPoint(i));
-    // }
-
-    // setPoints(_points);
-  }
-
-  const createPoint = (index) => {
-    const __textLorem = (count) =>
-      (["lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipisicing", "elit", "laudantium", "voluptatem", "vitae", "quam", "possimus", "odit", "quaerat", "beatae", "eum", "incidunt", "explicabo", "temporibus", "deleniti", "id", "ad", "ipsam", "omnis", "animi", "expedita", "corporis", "eaque", "eveniet", "sed", "corrupti", "accusantium", "delectus", "quasi", "labore", "aperiam", "hic", "ab", "qui", "iste", "reprehenderit", "tempore", "nisi", "fuga", "suscipit", "optio", "voluptate", "modi", "recusandae", "consequatur", "ratione", "quis", "deserunt", "porro", "enim", "itaque", "dignissimos", "sequi", "esse", "alias", "veniam", "magnam", "aliquid", "dolore", "adipisci", "facilis", "officiis", "illo", "neque", "ut", "cupiditate", "laboriosam", "illum", "numquam", "molestias", "nemo", "dolores", "architecto", "similique", "quos", "mollitia", "doloremque", "ipsa", "dolorem", "repudiandae", "pariatur", "in", "aliquam", "perferendis", "soluta", "quo", "at", "voluptatum", "inventore", "culpa", "placeat", "doloribus", "nulla", "odio", "vero", "sint", "iusto", "totam", "exercitationem", "autem", "ex", "harum", "saepe", "natus", "praesentium", "facere", "rerum", "obcaecati", "libero", "aspernatur", "impedit", "non", "sunt", "voluptates", "maxime", "nihil", "assumenda", "a", "vel", "quae", "magni", "veritatis", "quod", "perspiciatis", "dicta", "fugit", "quisquam", "et", "eius", "eligendi", "asperiores", "debitis", "iure", "voluptas", "blanditiis", "nam", "minus", "consequuntur", "earum", "distinctio", "cum", "maiores", "nostrum", "ea", "commodi", "quidem", "ducimus", "molestiae", "ullam", "error", "sapiente", "quibusdam", "officia", "necessitatibus", "eos", "velit", "unde", "nesciunt", "quas", "dolorum", "repellendus", "tenetur", "excepturi", "rem", "reiciendis", "provident", "tempora", "nobis", "laborum", "minima", "accusamus", "repellat", "cumque", "est", "atque", "voluptatibus", "quia", "fugiat"].sort(() => Math.random() - 0.5).slice(0, count).join(' ') + '.').capitalize();
-
-    const __randomDate = () => {
-      return Math.floor(Math.random() * Date.now());
-      // return Number(dayjs().subtract(index, 'h').valueOf())
-    }
-
-    return {id: getID(), date: __randomDate(), body: __textLorem(20), url: 'https://www.google.com/'};
   }
 
   const getFilteredPointsByPoints = (points) => {
@@ -99,7 +79,6 @@ function Points() {
     }
 
     timeline.push({type: 'date', text: getFormat(dateNext), id: dateNext.valueOf()});
-    // timeline.push({type: 'date', text: 'NOW', id: Date.now()});
 
     return timeline;
   }
