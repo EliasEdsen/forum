@@ -1,0 +1,20 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "pm2 start     ./src/index.js",
+    "restart": "pm2 restart ./src/index.js",
+    "stop": "pm2 stop       ./src/index.js",
+    "delete": "pm2 delete   ./src/index.js",
+    "development": "nodemon ./src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2",
+    "pg": "^8.11.5"
+  }
+}

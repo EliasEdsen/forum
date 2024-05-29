@@ -1,6 +1,6 @@
 import '../styles/Points.css';
 
-// import axios from 'axios';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import useID from '../hooks/useID';
 import dayjs from 'dayjs'
@@ -20,16 +20,17 @@ function Points() {
   }, []);
 
   const getPoints = () => {
-    // axios
-      // .get('https://jsonplaceholder.typicode.com/points')
-      // .then((response) => setPoints(response.data))
+    axios
+      .get('http://localhost:3001/api/points')
+      .then((response) => setPoints(response.data))
+      // .then((response) => console.log(response.data))
 
-    const _points = [];
-    for (let i = 0; i < 500; i++) {
-      _points.push(createPoint(i));
-    }
+    // const _points = [];
+    // for (let i = 0; i < 500; i++) {
+    //   _points.push(createPoint(i));
+    // }
 
-    setPoints(_points);
+    // setPoints(_points);
   }
 
   const createPoint = (index) => {
@@ -56,7 +57,7 @@ function Points() {
 
   const getSortedPointsByPoints = (points) => {
     return points.sort((pointA, pointB) => {
-      return pointA.date - pointB.date;
+      return dayjs(pointA.timestamp).valueOf() - dayjs(pointB.timestamp).valueOf();
     });
   }
 
@@ -75,26 +76,26 @@ function Points() {
       const point = points[indexOfPoint];
 
       if (!usedDay) {
-        timeline.push({type: 'date', text: getFormat(point.date), id: getID()});
+        timeline.push({type: 'date', text: getFormat(point.timestamp), id: getID()});
         timeline.push({type: 'point', point: point, id: point.id});
 
-        usedDay = point.date;
-      } else if (getFormat(usedDay) != getFormat(point.date)) {
-        if (getFormat(point.date) === getFormat(dateNext)) {
-          timeline.push({type: 'date', text: getFormat(point.date), id: getID()});
+        usedDay = point.timestamp;
+      } else if (getFormat(usedDay) != getFormat(point.timestamp)) {
+        if (getFormat(point.timestamp) === getFormat(dateNext)) {
+          timeline.push({type: 'date', text: getFormat(point.timestamp), id: getID()});
         } else {
           timeline.push({type: 'date', text: getFormat(dateNext), id: dateNext.valueOf()});
-          timeline.push({type: 'date', text: getFormat(point.date), id: getID()});
+          timeline.push({type: 'date', text: getFormat(point.timestamp), id: getID()});
         }
 
         timeline.push({type: 'point', point: point, id: point.id});
 
-        usedDay = point.date;
+        usedDay = point.timestamp;
       } else {
         timeline.push({type: 'point', point: point, id: point.id});
       }
 
-      dateNext = dayjs(point.date).add(1, 'd');
+      dateNext = dayjs(point.timestamp).add(1, 'd');
     }
 
     timeline.push({type: 'date', text: getFormat(dateNext), id: dateNext.valueOf()});
